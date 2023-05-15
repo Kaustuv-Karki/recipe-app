@@ -8,12 +8,19 @@ const Popular = () => {
 
     const key = "8423c2508ea74d399d82ed01b6935eb6";
     const getPopular = async () => {
-        const api = await fetch(
-            `https://api.spoonacular.com/recipes/random?apiKey=${key}&number=9`
-        );
-        const data = await api.json();
-        console.log(data);
-        setPopular(data.recipes);
+        const checkLocalStorage = localStorage.getItem("popular");
+
+        if (checkLocalStorage) {
+            setPopular(JSON.parse(checkLocalStorage));
+        } else {
+            const api = await fetch(
+                `https://api.spoonacular.com/recipes/random?apiKey=${key}&number=9`
+            );
+            const data = await api.json();
+            localStorage.setItem("popular", JSON.stringify(data.recipes));
+            console.log(data);
+            setPopular(data.recipes);
+        }
     };
 
     useEffect(() => {
@@ -33,7 +40,7 @@ const Popular = () => {
                 }}>
                 {popular.map((recipe) => {
                     return (
-                        <SplideSlide>
+                        <SplideSlide key={recipe.id}>
                             <Card>
                                 <p>{recipe.title}</p>
                                 <img src={recipe.image} alt={recipe.title} />
@@ -53,7 +60,7 @@ const Wrapper = styled.div`
 
 const Card = styled.div`
     min-height: 25rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     overflow: hidden;
     position: relative;
 
