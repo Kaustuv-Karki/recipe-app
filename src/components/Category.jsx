@@ -7,22 +7,22 @@ import { Link } from "react-router-dom";
 const Category = () => {
     return (
         <List>
-            <Link to="/cusine/Italian">
+            <SLink to="/cusine/Italian">
                 <FaPizzaSlice />
                 <h4>Italian</h4>
-            </Link>
-            <Link to="/cusine/American">
+            </SLink>
+            <SLink to="/cusine/American">
                 <FaHamburger />
                 <h4>American</h4>
-            </Link>
-            <Link to="/cusine/Chinese">
+            </SLink>
+            <SLink to="/cusine/Chinese">
                 <GiNoodles />
                 <h4>Chinese</h4>
-            </Link>
-            <Link to="cusine/Japanese">
+            </SLink>
+            <SLink to="cusine/Japanese">
                 <GiChopsticks />
                 <h4>Japanese</h4>
-            </Link>
+            </SLink>
         </List>
     );
 };
@@ -31,6 +31,42 @@ const List = styled.div`
     display: flex;
     justify-content: center;
     margin: 2rem 0rem;
+`;
+
+const SLink = styled(Link)`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 50%;
+    align-items: center;
+    margin: 1rem;
+    width: 6rem;
+    height: 6rem;
+    background-color: rgb(63, 96, 76);
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+
+    svg {
+        color: rgb(255, 255, 255);
+        font-size: 1.5rem;
+        margin-bottom: 0.4rem;
+    }
+
+    h4 {
+        color: white;
+        font-size: 0.8rem;
+    }
+
+    &:hover {
+        background-color: black;
+    }
+
+    &.active {
+        h4 {
+            text-decoration: underline;
+        }
+    }
 `;
 
 export default Category;
