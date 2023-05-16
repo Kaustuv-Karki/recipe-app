@@ -14,7 +14,7 @@ const Vegetarian = () => {
             setVegetarian(JSON.parse(checkLocalStorage));
         } else {
             const api = await fetch(
-                `https://api.spoonacular.com/recipes/random?apiKey=${key}&number=9`
+                `https://api.spoonacular.com/recipes/random?apiKey=${key}&number=9&tags=vegetarian`
             );
             const data = await api.json();
             localStorage.setItem("vegetarian", JSON.stringify(data.recipes));
@@ -28,7 +28,7 @@ const Vegetarian = () => {
     }, []);
     return (
         <Wrapper>
-            <h3>Popular Items</h3>
+            <h3>Vegetarian Items</h3>
             <Splide
                 options={{
                     perPage: 4,
@@ -36,6 +36,11 @@ const Vegetarian = () => {
                     pagination: false,
                     drag: "free",
                     gap: "5rem",
+                    breakpoints: {
+                        768: {
+                            perPage: 3,
+                        },
+                    },
                 }}>
                 {vegetarian.map((recipe) => {
                     return (
@@ -74,17 +79,18 @@ const Card = styled.div`
     p {
         position: absolute;
         z-index: 10;
-        left: 55%;
+        left: 50%;
         bottom: 0%;
         transform: translate(-50%, 0%);
         color: white;
         width: 100%;
         font-weight: 600;
-        font-size: 1rem;
+        font-size: 1.1rem;
         height: 40%;
         display: flex;
         justify-content: center;
         align-items: center;
+        text-align: center;
     }
 `;
 
