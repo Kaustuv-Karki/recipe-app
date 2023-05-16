@@ -7,19 +7,19 @@ import { Link } from "react-router-dom";
 const Category = () => {
     return (
         <List>
-            <SLink to="/cusine/Italian">
+            <SLink to="/cuisine/Italian">
                 <FaPizzaSlice />
                 <h4>Italian</h4>
             </SLink>
-            <SLink to="/cusine/American">
+            <SLink to="/cuisine/American">
                 <FaHamburger />
                 <h4>American</h4>
             </SLink>
-            <SLink to="/cusine/Chinese">
+            <SLink to="/cuisine/Chinese">
                 <GiNoodles />
                 <h4>Chinese</h4>
             </SLink>
-            <SLink to="cusine/Japanese">
+            <SLink to="cuisine/Japanese">
                 <GiChopsticks />
                 <h4>Japanese</h4>
             </SLink>
