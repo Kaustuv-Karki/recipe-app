@@ -67,7 +67,7 @@ const DetailWrapper = styled.div`
     display: flex;
 
     .active {
-        background-color: #121212;
+        background-color: #212121;
         color: white;
     }
 
@@ -93,6 +93,7 @@ const Button = styled.button`
     margin-right: 2rem;
     font-weight: 600;
     cursor: pointer;
+    margin-top 1rem;
 `;
 
 const Info = styled.div`
