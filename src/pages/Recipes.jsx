@@ -3,86 +3,92 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
 const Recipes = () => {
-    const [details, setDetails] = useState({});
+  const [details, setDetails] = useState({});
 
-    const [activeTab, setActiveTab] = useState("instructions");
+  const [loading, setLoading] = useState(true);
 
-    let params = useParams();
-    const key = "8423c2508ea74d399d82ed01b6935eb6";
-    const fetchDetails = async () => {
-        const data = await fetch(
-            `https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${key}`
-        );
-        const dataValue = await data.json();
-        setDetails(dataValue);
-    };
+  const [activeTab, setActiveTab] = useState("instructions");
 
-    useEffect(() => {
-        fetchDetails();
-    }, [params.name]);
-
-    return (
-        <DetailWrapper>
-            <div className="">
-                <h3>{details.title}</h3>
-                <img src={details.image} alt={details.title} />
-            </div>
-            <Info>
-                <Button
-                    className={activeTab === "instructions" ? "active" : ""}
-                    onClick={() => setActiveTab("instructions")}>
-                    Instructions
-                </Button>
-                <Button
-                    className={activeTab === "ingredients" ? "active" : ""}
-                    onClick={() => setActiveTab("ingredients")}>
-                    Ingredients
-                </Button>
-                {activeTab === "instructions" ? (
-                    <div className="">
-                        <h2
-                            dangerouslySetInnerHTML={{
-                                __html: details.summary,
-                            }}></h2>
-                        <h2
-                            dangerouslySetInnerHTML={{
-                                __html: details.instructions,
-                            }}></h2>
-                    </div>
-                ) : (
-                    <ul>
-                        {details.extendedIngredients.map((ingredient) => (
-                            <li key={ingredient.id}>{ingredient.original}</li>
-                        ))}
-                    </ul>
-                )}
-            </Info>
-        </DetailWrapper>
+  let params = useParams();
+  const key = "8423c2508ea74d399d82ed01b6935eb6";
+  const fetchDetails = async () => {
+    const data = await fetch(
+      `https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${key}`
     );
+    const dataValue = await data.json();
+    setDetails(dataValue);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchDetails();
+  }, [params.name]);
+
+  return (
+    <DetailWrapper>
+      {loading && <h3>Loading...</h3>}
+      <div className="">
+        <h3>{details.title}</h3>
+        <img src={details.image} alt={details.title} />
+      </div>
+      {!loading && (
+        <Info>
+          <Button
+            className={activeTab === "instructions" ? "active" : ""}
+            onClick={() => setActiveTab("instructions")}>
+            Instructions
+          </Button>
+          <Button
+            className={activeTab === "ingredients" ? "active" : ""}
+            onClick={() => setActiveTab("ingredients")}>
+            Ingredients
+          </Button>
+          {activeTab === "instructions" ? (
+            <div className="">
+              <h2
+                dangerouslySetInnerHTML={{
+                  __html: details.summary,
+                }}></h2>
+              <h2
+                dangerouslySetInnerHTML={{
+                  __html: details.instructions,
+                }}></h2>
+            </div>
+          ) : (
+            <ul>
+              {details.extendedIngredients.map((ingredient) => (
+                <li key={ingredient.id}>{ingredient.original}</li>
+              ))}
+            </ul>
+          )}
+        </Info>
+      )}
+    </DetailWrapper>
+  );
 };
 
 const DetailWrapper = styled.div`
-    margin-top: 10rem;
-    margin-bottom: 5rem;
-    display: flex;
+  margin-top: 10rem;
+  margin-bottom: 5rem;
+  display: flex;
 
-    .active {
-        background-color: #212121;
-        color: white;
-    }
+  .active {
+    background-color: #212121;
+    color: white;
+  }
 
-    h2 {
-        margin-bottom: 2rem;
-    }
+  h2 {
+    margin-bottom: 2rem;
+  }
 
-    li {
-        font-size: 1.2rem;
-        line-height: 2.5rem;
-    }
+  li {
+    font-size: 1.2rem;
+    line-height: 2.5rem;
+  }
 
-    ul {
-        margin-top: 2rem;
-    }
+  ul {
+    margin-top: 2rem;
+  }
 `;
 
 const Button = styled.button`
@@ -97,7 +103,7 @@ const Button = styled.button`
 `;
 
 const Info = styled.div`
-    margin-left: 10rem;
+  margin-left: 10rem;
 `;
 
 export default Recipes;
